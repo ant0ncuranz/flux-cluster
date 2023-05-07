@@ -41,7 +41,6 @@ spec:
             name: external-dns-secret
             key: api-key
     extraArgs:
-      - --cloudflare-proxied
       - --annotation-filter=external-dns.alpha.kubernetes.io/target
     policy: sync
     sources: ["ingress"]
