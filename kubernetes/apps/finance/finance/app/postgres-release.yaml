@@ -25,3 +25,11 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  values:
+    fullnameOverride: postgres
+    auth:
+      username: postgres
+      password: postgres
+      database: finance
+    persistence:
+      enabled: true
