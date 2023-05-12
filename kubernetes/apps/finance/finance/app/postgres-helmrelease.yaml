@@ -33,3 +33,4 @@ spec:
       database: finance
     persistence:
       enabled: true
+      existingClaim: postgres-data
