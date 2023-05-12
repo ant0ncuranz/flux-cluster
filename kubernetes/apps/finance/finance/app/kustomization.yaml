@@ -4,3 +4,4 @@ kind: Kustomization
 namespace: finance
 resources:
   - ./postgres-helmrelease.yaml
+  - ./keycloak-helmrelease.yaml
