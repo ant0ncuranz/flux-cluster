@@ -27,4 +27,5 @@ spec:
     keepHistory: false
   values:
     connect:
+      credentialsKey: "token"
       credentialsName: "connect-token"
