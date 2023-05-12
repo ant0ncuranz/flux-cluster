@@ -27,7 +27,7 @@ spec:
     keepHistory: false
   values:
     connect:
-      credentialsKey: "token"
-      credentialsName: "onepassword-token"
+      credentialsName: "onepassword-credentials"
+      credentialsKey: "credentials"
     operator:
       create: true
