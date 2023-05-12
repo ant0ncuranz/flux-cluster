@@ -3,6 +3,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: postgres-data
   namespace: finance
+  labels:
+    app.kubernetes.io/instance: postgres
+    app.kubernetes.io/name: postgres
 spec:
   accessModes:
     - ReadWriteOnce
