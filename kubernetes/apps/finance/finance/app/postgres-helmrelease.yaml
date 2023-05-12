@@ -28,10 +28,9 @@ spec:
   values:
     fullnameOverride: postgres
     auth:
-      username: postgres
-      password: postgres
       database: finance
-    persistence:
-      enabled: true
-      storageClass: "local-path"
-      # existingClaim: postgres-data
+    primary:
+      persistence:
+        enabled: true
+        storageClass: local-path
+        # existingClaim: postgres-data

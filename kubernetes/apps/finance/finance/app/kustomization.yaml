@@ -4,4 +4,3 @@ kind: Kustomization
 namespace: finance
 resources:
   - ./postgres-helmrelease.yaml
-  - ./postgres-pvc.yaml
