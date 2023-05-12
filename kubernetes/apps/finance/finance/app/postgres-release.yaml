@@ -25,16 +25,16 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  values:
-    auth:
-      database: finance
-      username: postgres
-      password: postgres
-    image:
-      registry: docker.io
-      repository: bitnami/postgresql
-      tag: "15.2.0"
-    metrics:
-      enabled: true
-      serviceMonitor:
-        enabled: true
+  # values:
+  #   auth:
+  #     database: finance
+  #     username: postgres
+  #     password: postgres
+  #   image:
+  #     registry: docker.io
+  #     repository: bitnami/postgresql
+  #     tag: "15.2.0"
+  #   metrics:
+  #     enabled: true
+  #     serviceMonitor:
+  #       enabled: true
