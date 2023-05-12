@@ -29,3 +29,5 @@ spec:
     connect:
       credentialsKey: "token"
       credentialsName: "connect-token"
+    operator:
+      create: true
