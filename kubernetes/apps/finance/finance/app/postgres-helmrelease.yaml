@@ -33,4 +33,5 @@ spec:
       database: finance
     persistence:
       enabled: true
-      existingClaim: postgres-data
+      storageClass: local-path
+      # existingClaim: postgres-data
