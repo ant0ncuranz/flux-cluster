@@ -28,6 +28,6 @@ spec:
   values:
     connect:
       credentialsKey: "token"
-      credentialsName: "connect-token"
+      credentialsName: "onepassword-token"
     operator:
       create: true
