@@ -27,6 +27,7 @@ spec:
     keepHistory: false
   values:
     connect:
+      serviceType: ClusterIP
       credentialsName: "onepassword-credentials"
       credentialsKey: "credentials"
     operator:
