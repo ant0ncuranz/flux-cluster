@@ -29,7 +29,6 @@ spec:
     fullnameOverride: finance-postgres
     auth:
       database: finance
-      password: password
       postgresPassword: password
     primary:
       persistence:
