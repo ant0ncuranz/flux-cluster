@@ -37,3 +37,5 @@ spec:
       hostname: "keycloak.${SECRET_DOMAIN}"
       servicePort: https
       tls: true
+    tls:
+      enabled: true
