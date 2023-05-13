@@ -26,6 +26,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    production: true
     global:
       storageClass: local-path
     ingress:
@@ -34,4 +35,5 @@ spec:
       annotations:
         external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
       hostname: "keycloak.${SECRET_DOMAIN}"
+      servicePort: https
       tls: true
