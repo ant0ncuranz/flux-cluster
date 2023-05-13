@@ -34,7 +34,7 @@ spec:
             - name: POSTGRES_PASSWD
               value: password
             - name: POSTGRES_URL
-              value: jdbc:postgresql://postgres:5432/finance
+              value: jdbc:postgresql://finance-postgres:5432/finance
             - name: POSTGRES_USER
               value: postgres
           image: registry.gitlab.com/antoncuranz/financeq
