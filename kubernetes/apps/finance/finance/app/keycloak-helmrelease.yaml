@@ -32,6 +32,6 @@ spec:
       enabled: true
       ingressClassName: nginx
       annotations:
-        external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
-      hostname: "keycloak.${SECRET_DOMAIN}"
+        external-dns.alpha.kubernetes.io/target: "ipv4.cloudton.de"
+      hostname: "keycloak.cloudton.de"
       tls: true
