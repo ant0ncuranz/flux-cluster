@@ -18,13 +18,13 @@ spec:
       containers:
         - env:
             - name: BACKEND_URL
-              value: https://financeq.cloudton.de
+              value: https://financeq.${SECRET_DOMAIN}
             - name: KEYCLOAK_CLIENT_ID
               value: finance-frontend
             - name: KEYCLOAK_REALM
               value: finance
             - name: KEYCLOAK_URL
-              value: https://keycloak.cloudton.de
+              value: https://keycloak.${SECRET_DOMAIN}
           image: registry.gitlab.com/antoncuranz/financeionic
           name: finance-frontend
           ports:

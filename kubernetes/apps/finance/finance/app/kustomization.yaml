@@ -6,4 +6,6 @@ resources:
   - ./postgres-helmrelease.yaml
   - ./keycloak-helmrelease.yaml
   - ./backend-deployment.yaml
+  - ./backend-service.yaml
   - ./frontend-deployment.yaml
+  - ./frontend-service.yaml
