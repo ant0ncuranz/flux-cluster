@@ -24,7 +24,7 @@ spec:
             - name: KEYCLOAK_CLIENT_ID
               value: finance-backend
             - name: KEYCLOAK_REALM_URL
-              value: https://keycloak.${SECRET_DOMAIN}/realms/finance
+              value: http://keycloak.${SECRET_DOMAIN}/realms/finance
             - name: KEYCLOAK_SECRET
               value: overrideme
             - name: NORDIGEN_SECRET_ID
