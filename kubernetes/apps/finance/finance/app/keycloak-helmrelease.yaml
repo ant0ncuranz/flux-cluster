@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: keycloak2
+  name: keycloak3
   namespace: finance
 spec:
   interval: 15m
@@ -28,10 +28,10 @@ spec:
   values:
     global:
       storageClass: local-path
-    # ingress:
-    #   enabled: true
-    #   ingressClassName: nginx
-    #   annotations:
-    #     external-dns.alpha.kubernetes.io/target: "ipv4.cloudton.de"
-    #   hostname: "keycloak.cloudton.de"
-    #   tls: true
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      annotations:
+        external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
+      hostname: "keycloak.${SECRET_DOMAIN}"
+      tls: true
