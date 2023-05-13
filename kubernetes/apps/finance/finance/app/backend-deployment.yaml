@@ -41,7 +41,7 @@ spec:
               value: "0 */15 * * * ?"
             - name: CRON_TRANSACTION_VALIDATION
               value: "0 0 */1 * * ?"
-          image: registry.gitlab.com/antoncuranz/financeq:dev
+          image: registry.gitlab.com/antoncuranz/financeq:0037edad
           name: finance-backend
           ports:
             - containerPort: 8080
