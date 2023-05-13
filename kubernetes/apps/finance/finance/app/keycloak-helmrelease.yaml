@@ -27,6 +27,7 @@ spec:
     keepHistory: false
   values:
     production: true
+    proxy: edge
     global:
       storageClass: local-path
     ingress:
@@ -35,7 +36,3 @@ spec:
       annotations:
         external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
       hostname: "keycloak.${SECRET_DOMAIN}"
-      servicePort: https
-      tls: true
-    tls:
-      enabled: true
