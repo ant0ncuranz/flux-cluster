@@ -11,5 +11,4 @@ spec:
       protocol: TCP
       targetPort: 80
   selector:
-    matchLabels:
-      app: finance-frontend
+    app: finance-frontend
