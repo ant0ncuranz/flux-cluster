@@ -37,7 +37,11 @@ spec:
               value: jdbc:postgresql://finance-postgres:5432/finance
             - name: POSTGRES_USER
               value: postgres
-          image: registry.gitlab.com/antoncuranz/financeq
+            - name: CRON_ALERT_DELIVERY
+              value: "0 */15 * * * ?"
+            - name: CRON_TRANSACTION_VALIDATION
+              value: "0 0 */1 * * ?"
+          image: registry.gitlab.com/antoncuranz/financeq:dev
           name: finance-backend
           ports:
             - containerPort: 8080

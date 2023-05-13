@@ -25,7 +25,7 @@ spec:
               value: finance
             - name: KEYCLOAK_URL
               value: https://keycloak.${SECRET_DOMAIN}
-          image: registry.gitlab.com/antoncuranz/financeionic
+          image: registry.gitlab.com/antoncuranz/financeionic:dev
           name: finance-frontend
           ports:
             - containerPort: 80
