@@ -42,4 +42,4 @@ spec:
           ports:
             - containerPort: 8080
       imagePullSecrets:
-        - name: gitlab-token-finance
+        - name: gitlab-token
