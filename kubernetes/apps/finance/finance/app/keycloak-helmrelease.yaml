@@ -28,6 +28,9 @@ spec:
   values:
     global:
       storageClass: local-path
+    service:
+      type: ClusterIP
+      externalTrafficPolicy: null
     ingress:
       enabled: true
       ingressClassName: nginx
