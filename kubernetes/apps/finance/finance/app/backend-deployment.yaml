@@ -26,13 +26,25 @@ spec:
             - name: KEYCLOAK_REALM_URL
               value: https://keycloak.${SECRET_DOMAIN}/realms/finance
             - name: KEYCLOAK_SECRET
-              value: overrideme
+              valueFrom:
+                secretKeyRef:
+                  name: finance-secrets
+                  key: KEYCLOAK_SECRET
             - name: NORDIGEN_SECRET_ID
-              value: overrideme
+              valueFrom:
+                secretKeyRef:
+                  name: finance-secrets
+                  key: NORDIGEN_SECRET_ID
             - name: NORDIGEN_SECRET_KEY
-              value: overrideme
+              valueFrom:
+                secretKeyRef:
+                  name: finance-secrets
+                  key: NORDIGEN_SECRET_KEY
             - name: POSTGRES_PASSWD
-              value: password
+              valueFrom:
+                secretKeyRef:
+                  name: finance-secrets
+                  key: POSTGRES_PASSWD
             - name: POSTGRES_URL
               value: jdbc:postgresql://finance-postgres:5432/finance
             - name: POSTGRES_USER
