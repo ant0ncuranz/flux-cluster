@@ -24,7 +24,7 @@ spec:
             - name: KEYCLOAK_CLIENT_ID
               value: finance-backend
             - name: KEYCLOAK_REALM_URL
-              value: http://keycloak.${SECRET_DOMAIN}/realms/finance
+              value: https://keycloak.${SECRET_DOMAIN}/realms/finance
             - name: KEYCLOAK_SECRET
               value: overrideme
             - name: NORDIGEN_SECRET_ID
@@ -41,7 +41,7 @@ spec:
               value: "0 */15 * * * ?"
             - name: CRON_TRANSACTION_VALIDATION
               value: "0 0 */1 * * ?"
-          image: registry.gitlab.com/antoncuranz/financeq:0037edad
+          image: registry.gitlab.com/antoncuranz/financeq:dev
           name: finance-backend
           ports:
             - containerPort: 8080
