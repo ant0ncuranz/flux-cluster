@@ -22,28 +22,28 @@ spec:
             - name: CORS_ALLOW_ORIGINS
               value: https://finance.${SECRET_DOMAIN}
             - name: KEYCLOAK_CLIENT_ID
-              value: finance-backend
+              value: finance-secrets
             - name: KEYCLOAK_REALM_URL
               value: https://keycloak.${SECRET_DOMAIN}/realms/finance
             - name: KEYCLOAK_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: finance-backend
+                  name: finance-secrets
                   key: KEYCLOAK_SECRET
             - name: NORDIGEN_SECRET_ID
               valueFrom:
                 secretKeyRef:
-                  name: finance-backend
+                  name: finance-secrets
                   key: NORDIGEN_SECRET_ID
             - name: NORDIGEN_SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  name: finance-backend
+                  name: finance-secrets
                   key: NORDIGEN_SECRET_KEY
             - name: POSTGRES_PASSWD
               valueFrom:
                 secretKeyRef:
-                  name: finance-backend
+                  name: finance-secrets
                   key: POSTGRES_PASSWD
             - name: POSTGRES_URL
               value: jdbc:postgresql://finance-postgres:5432/finance

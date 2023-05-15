@@ -29,7 +29,7 @@ spec:
     fullnameOverride: finance-postgres
     auth:
       database: finance
-      existingSecret: finance-backend
+      existingSecret: finance-secrets
       secretKeys:
         adminPasswordKey: POSTGRES_PASSWD
         userPasswordKey: POSTGRES_PASSWD
