@@ -29,7 +29,9 @@ spec:
     fullnameOverride: finance-postgres
     auth:
       database: finance
-      postgresPassword: password
+      existingSecret: finance-backend
+      secretKeys:
+        adminPasswordKey: POSTGRES_PASSWD
     primary:
       persistence:
         enabled: true
