@@ -49,6 +49,9 @@ main() {
             > "${PROJECT_DIR}/terraform/cloudflare/secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/terraform/cloudflare/secret.sops.yaml"
         # generate kubernetes secrets
+        envsubst < "${PROJECT_DIR}/tmpl/kubernetes/cluster-secrets.sops.yaml" \
+            > "${PROJECT_DIR}/kubernetes/flux/vars/cluster-secrets.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/flux/vars/cluster-secrets.sops.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/kubernetes/onepassword-secret.sops.yaml" \
             > "${PROJECT_DIR}/kubernetes/apps/onepassword/onepassword/app/secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/apps/onepassword/onepassword/app/secret.sops.yaml"
