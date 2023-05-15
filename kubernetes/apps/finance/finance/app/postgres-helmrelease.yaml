@@ -32,6 +32,8 @@ spec:
       existingSecret: finance-backend
       secretKeys:
         adminPasswordKey: POSTGRES_PASSWD
+        userPasswordKey: POSTGRES_PASSWD
+        replicationPasswordKey: POSTGRES_PASSWD
     primary:
       persistence:
         enabled: true
