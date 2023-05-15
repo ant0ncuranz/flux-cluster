@@ -77,7 +77,7 @@ data "http" "ipv4" {
 resource "cloudflare_record" "ipv4" {
   name    = "ipv4"
   zone_id = lookup(data.cloudflare_zones.domain.zones[0], "id")
-  value   = "192.168.0.102"
+  value   = "192.168.0.151"
   proxied = false
   type    = "A"
   ttl     = 1
