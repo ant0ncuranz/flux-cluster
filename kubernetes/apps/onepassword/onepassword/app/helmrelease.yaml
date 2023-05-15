@@ -28,7 +28,9 @@ spec:
   values:
     connect:
       serviceType: ClusterIP
-      credentialsName: "onepassword-credentials"
-      credentialsKey: "credentials"
+      credentialsName: onepassword-secret
+      credentialsKey: credentials
     operator:
       create: true
+      token:
+        name: onepassword-secret
