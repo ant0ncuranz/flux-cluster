@@ -4,3 +4,4 @@ kind: Kustomization
 namespace: onepassword
 resources:
   - ./helmrelease.yaml
+  - ./secret.sops.yaml
