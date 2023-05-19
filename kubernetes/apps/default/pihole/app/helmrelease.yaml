@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    serviceDns:
+      type: ClusterIP
     ingress:
       enabled: true
       ingressClassName: nginx
