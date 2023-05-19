@@ -28,10 +28,12 @@ spec:
   values:
     serviceTCP:
       type: LoadBalancer
+      loadBalancerIp: 192.168.0.151
       annotations:
         metallb.universe.tf/allow-shared-ip: pihole-svc
     serviceUDP:
       type: LoadBalancer
+      loadBalancerIp: 192.168.0.151
       annotations:
         metallb.universe.tf/allow-shared-ip: pihole-svc
     ingress:
