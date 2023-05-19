@@ -26,9 +26,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    serviceTCP:
-      type: LoadBalancer
-    serviceUDP:
+    serviceDns:
       type: LoadBalancer
     ingress:
       enabled: true
