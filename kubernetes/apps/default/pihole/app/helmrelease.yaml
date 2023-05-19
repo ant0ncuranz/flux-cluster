@@ -29,13 +29,13 @@ spec:
     serviceTCP:
       type: LoadBalancer
       externalTrafficPolicy: Local
-      loadBalancerIp: 192.168.0.155
+      loadBalancerIp: 192.168.0.151
       annotations:
         metallb.universe.tf/allow-shared-ip: pihole-svc
     serviceUDP:
       type: LoadBalancer
       externalTrafficPolicy: Local
-      loadBalancerIp: 192.168.0.155
+      loadBalancerIp: 192.168.0.151
       annotations:
         metallb.universe.tf/allow-shared-ip: pihole-svc
     ingress:
