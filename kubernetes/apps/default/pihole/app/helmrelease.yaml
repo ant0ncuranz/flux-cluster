@@ -29,6 +29,10 @@ spec:
     serviceDns:
       type: LoadBalancer
       loadBalancerIp: 192.168.0.151
+      annotations:
+        metallb.universe.tf/allow-shared-ip: pihole-svc
+    serviceDhcp:
+      enabled: false
     ingress:
       enabled: true
       ingressClassName: nginx
