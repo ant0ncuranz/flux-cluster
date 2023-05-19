@@ -26,8 +26,14 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    serviceDns:
-      type: ClusterIP
+    serviceTCP:
+      type: LoadBalancer
+      annotations:
+        metallb.universe.tf/allow-shared-ip: pihole-svc
+    serviceUDP:
+      type: LoadBalancer
+      annotations:
+        metallb.universe.tf/allow-shared-ip: pihole-svc
     ingress:
       enabled: true
       ingressClassName: nginx
