@@ -14,3 +14,4 @@ resources:
   - ./weave-gitops.yaml
   - ./onepassword.yaml
   - ./prometheus.yaml
+  - ./pihole.yaml
