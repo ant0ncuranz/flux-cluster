@@ -13,3 +13,4 @@ resources:
   - ./stakater.yaml
   - ./weave-gitops.yaml
   - ./onepassword.yaml
+  - ./prometheus.yaml
