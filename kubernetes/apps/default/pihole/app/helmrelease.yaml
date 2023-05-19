@@ -41,7 +41,7 @@ spec:
         - "pihole.${SECRET_DOMAIN}"
     persistentVolumeClaim:
       enabled: true
-      storageClassName: local-path
+      storageClass: local-path
     DNS1: 1.1.1.1
     DNS2: 1.0.0.1
     ftl:
