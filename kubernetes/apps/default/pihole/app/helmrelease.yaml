@@ -39,3 +39,10 @@ spec:
         external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
       hosts:
         - "pihole.${SECRET_DOMAIN}"
+    persistentVolumeClaim:
+      enabled: true
+      storageClassName: local-path
+    DNS1: 1.1.1.1
+    DNS2: 1.0.0.1
+    ftl:
+      BLOCK_ICLOUD_PR: false
