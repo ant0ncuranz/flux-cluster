@@ -29,8 +29,8 @@ spec:
     controller:
       strategy: RollingUpdate
     image:
-      repository: docker.io/oznu/homebridge
-      tag: 2023-01-08
+      repository: ghcr.io/oznu/homebridge
+      tag: "2023-01-08"
     service:
       main:
         ports:
