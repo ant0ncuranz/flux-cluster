@@ -6,3 +6,4 @@ resources:
   - ./echo-server/ks.yaml
   - ./pihole/ks.yaml
   - ./immich/ks.yaml
+  - ./homebridge/ks.yaml
