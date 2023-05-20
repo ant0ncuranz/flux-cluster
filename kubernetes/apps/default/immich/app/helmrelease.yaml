@@ -26,6 +26,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    immich:
+      persistence:
+        library:
+          existingClaim: immich-data
     proxy:
       ingress:
         main:
