@@ -36,6 +36,8 @@ spec:
         ports:
           http:
             port: &port 8581
+          shelly:
+            port: 8181
     hostNetwork: true
     persistence:
       homebridge:
@@ -54,6 +56,15 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+    configMaps:
+      config:
+        enabled: true
+        nameOverride: startup-sh
+        data:
+          startup.sh: |-
+            #!/bin/sh
+            npm install --save homebridge-shelly@latest
+            npm install --save homebridge-tuya-platform@latest
     probes:
       liveness:
         enabled: true
