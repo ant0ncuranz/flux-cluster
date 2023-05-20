@@ -38,8 +38,6 @@ spec:
       enabled: true
       global:
         storageClass: local-path
-    typesense:
-      enabled: true
     proxy:
       ingress:
         main:
