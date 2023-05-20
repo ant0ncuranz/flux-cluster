@@ -32,8 +32,9 @@ spec:
           existingClaim: immich-data
     postgresql:
       enabled: true
-      global:
-        storageClass: local-path
+      primary:
+        persistence:
+          storageClass: local-path
     proxy:
       ingress:
         main:
