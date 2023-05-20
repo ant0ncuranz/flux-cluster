@@ -7,3 +7,4 @@ resources:
   - ./pihole/ks.yaml
   - ./immich/ks.yaml
   - ./homebridge/ks.yaml
+  - ./dashboard/ks.yaml
