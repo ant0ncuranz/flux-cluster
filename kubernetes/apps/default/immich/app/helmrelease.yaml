@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image:
+      tag: v1.56.2
     immich:
       persistence:
         library:
@@ -38,6 +40,12 @@ spec:
       enabled: true
       global:
         storageClass: local-path
+    typesense:
+      enabled: true
+      persistence:
+        tsdata:
+          enabled: true
+          type: emptyDir
     proxy:
       ingress:
         main:
