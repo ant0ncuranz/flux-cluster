@@ -34,6 +34,10 @@ spec:
       enabled: true
       global:
         storageClass: local-path
+    redis:
+      enabled: true
+    typesense:
+      enabled: true
     proxy:
       ingress:
         main:
