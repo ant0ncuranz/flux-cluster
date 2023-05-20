@@ -26,12 +26,14 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    ingress:
-      enabled: true
-      annotations:
-        external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
-      hosts:
-        - host: "immich.${SECRET_DOMAIN}"
-          paths:
-            - path: /
-              pathType: Prefix
+    proxy:
+      ingress:
+        main:
+          enabled: true
+          annotations:
+            external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
+          hosts:
+            - host: "immich.${SECRET_DOMAIN}"
+              paths:
+                - path: /
+                  pathType: Prefix
