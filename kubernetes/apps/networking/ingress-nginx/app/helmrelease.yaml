@@ -34,6 +34,7 @@ spec:
         annotations:
           metallb.universe.tf/loadBalancerIPs: "${METALLB_INGRESS_ADDR}"
         externalTrafficPolicy: Local
+        enableHttp: false
       publishService:
         enabled: true
       ingressClassResource:
