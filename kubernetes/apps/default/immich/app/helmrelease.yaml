@@ -30,6 +30,8 @@ spec:
       persistence:
         library:
           existingClaim: immich-data
+    postgresql:
+      enabled: true
     proxy:
       ingress:
         main:
