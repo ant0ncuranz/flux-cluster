@@ -36,6 +36,8 @@ spec:
         storageClass: local-path
     redis:
       enabled: true
+      global:
+        storageClass: local-path
     typesense:
       enabled: true
     proxy:
