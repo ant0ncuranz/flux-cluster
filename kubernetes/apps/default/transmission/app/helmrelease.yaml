@@ -41,6 +41,12 @@ spec:
       data:
         enabled: true
         existingClaim: transmission-data
+      openvpn:
+        enabled: true
+        accessMode: ReadWriteOnce
+        size: 25Mi
+        storageClass: local-path
+        mountPath: /etc/openvpn/custom
     service:
       main:
         ports:
