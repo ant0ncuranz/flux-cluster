@@ -66,6 +66,13 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+    probes:
+      liveness:
+        spec:
+          timeoutSeconds: 30
+      readiness:
+        spec:
+          timeoutSeconds: 30
     securityContext:
       # allowPrivilegeEscalation: true
       capabilities:
