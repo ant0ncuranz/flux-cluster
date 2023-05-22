@@ -33,6 +33,12 @@ spec:
       tag: 10.8.10
     env:
       TZ: "Europe/Berlin"
+    persistence:
+      config:
+        enabled: true
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: local-path
     service:
       main:
         ports:
