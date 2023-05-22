@@ -47,6 +47,10 @@ spec:
         size: 25Mi
         storageClass: local-path
         mountPath: /etc/openvpn/custom
+      tunnel:
+        enabled: true
+        type: hostPath
+        hostPath: /dev/net/tun
     service:
       main:
         ports:
