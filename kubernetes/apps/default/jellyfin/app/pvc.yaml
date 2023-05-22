@@ -12,7 +12,8 @@ spec:
   claimRef:
     namespace: default
     name: jellyfin-filme
-  hostPath: "/mnt/HDD1/Public/Filme"
+  hostPath:
+    path: /mnt/HDD1/Public/Filme
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -39,7 +40,8 @@ spec:
   claimRef:
     namespace: default
     name: jellyfin-serien
-  hostPath: "/mnt/HDD1/Public/Serien"
+  hostPath:
+    path: /mnt/HDD1/Public/Serien
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
