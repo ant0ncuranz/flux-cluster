@@ -43,6 +43,7 @@ spec:
         enabled: true
         type: hostPath
         hostPath: /srv/Transmission
+        mountPath: /data
         existingClaim: transmission-data
       openvpn:
         enabled: true
