@@ -51,6 +51,7 @@ spec:
         enabled: true
         type: hostPath
         hostPath: /dev/net/tun
+        mountPath: /dev/net/tun
     service:
       main:
         ports:
