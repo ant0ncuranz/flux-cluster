@@ -32,6 +32,7 @@ spec:
       repository: haugene/transmission-openvpn
       tag: 5.0.2
     env:
+      TZ: "Europe/Berlin"
       OPENVPN_PROVIDER: "custom"
       OPENVPN_USERNAME: "user"
       OPENVPN_PASSWORD: "pass"
@@ -40,6 +41,8 @@ spec:
     persistence:
       data:
         enabled: true
+        type: hostPath
+        hostPath: /srv/Transmission
         existingClaim: transmission-data
       openvpn:
         enabled: true
@@ -47,11 +50,6 @@ spec:
         size: 25Mi
         storageClass: local-path
         mountPath: /etc/openvpn/custom
-      # tunnel:
-      #   enabled: true
-      #   type: hostPath
-      #   hostPath: /dev/net/tun
-      #   mountPath: /dev/net/tun
     service:
       main:
         ports:
