@@ -63,9 +63,9 @@ spec:
           external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
         hosts:
           - host: "transmission.${SECRET_DOMAIN}"
-            paths:
-              - path: /transmission
-                pathType: Prefix
+            # paths:
+            #   - path: /transmission
+            #     pathType: Prefix
     securityContext:
       # allowPrivilegeEscalation: true
       capabilities:
