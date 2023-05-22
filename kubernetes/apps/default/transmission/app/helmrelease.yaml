@@ -63,6 +63,12 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+    securityContext:
+      allowPrivilegeEscalation: true
+      capabilities:
+        add:
+          - NET_ADMIN
+      privileged: true
     resources:
       requests:
         cpu: 100m
