@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: echo-server
+  name: jellyfin
   namespace: default
 spec:
   interval: 15m
@@ -29,13 +29,15 @@ spec:
     controller:
       strategy: RollingUpdate
     image:
-      repository: docker.io/jmalloc/echo-server
-      tag: 0.3.5
+      repository: linuxserver/jellyfin
+      tag: 10.8.10
+    env:
+      TZ: "Europe/Berlin"
     service:
       main:
         ports:
           http:
-            port: &port 8080
+            port: &port 8096
     probes:
       liveness: &probes
         enabled: true
@@ -58,16 +60,13 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: "jellyfin.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
-        tls:
-          - hosts:
-              - *host
     resources:
       requests:
-        cpu: 5m
-        memory: 10Mi
+        cpu: 100m
+        memory: 1024Mi
       limits:
-        memory: 50Mi
+        memory: 4096Mi
