@@ -39,6 +39,12 @@ spec:
         accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: local-path
+      filme:
+        enabled: true
+        existingClaim: jellyfin-filme
+      serien:
+        enabled: true
+        existingClaim: jellyfin-serien
     service:
       main:
         ports:

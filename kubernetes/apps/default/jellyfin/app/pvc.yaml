@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jellyfin-filme-pv
+  namespace: default
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  claimRef:
+    namespace: default
+    name: jellyfin-filme
+  hostPath: "/mnt/HDD1/Public/Filme"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: default
+  name: jellyfin-filme
+spec:
+  storageClassName: manual
+  volumeName: jellyfin-filme-pv
+  accessModes:
+    - ReadWriteOnce
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jellyfin-serien-pv
+  namespace: default
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  claimRef:
+    namespace: default
+    name: jellyfin-serien
+  hostPath: "/mnt/HDD1/Public/Serien"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: default
+  name: jellyfin-serien
+spec:
+  storageClassName: manual
+  volumeName: jellyfin-serien-pv
+  accessModes:
+    - ReadWriteOnce
