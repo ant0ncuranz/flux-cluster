@@ -64,7 +64,7 @@ spec:
         hosts:
           - host: "transmission.${SECRET_DOMAIN}"
             paths:
-              - path: /
+              - path: /transmission/web/
                 pathType: Prefix
     securityContext:
       # allowPrivilegeEscalation: true
