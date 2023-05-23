@@ -30,7 +30,7 @@ spec:
       strategy: RollingUpdate
     image:
       repository: ghcr.io/linuxserver/radarr
-      tag: version-1.4.1.3258
+      tag: version-4.4.4.7068
     env:
       TZ: Europe/Berlin
       PUID: 1000

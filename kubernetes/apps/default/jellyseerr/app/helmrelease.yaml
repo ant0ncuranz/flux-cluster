@@ -29,7 +29,7 @@ spec:
     controller:
       strategy: RollingUpdate
     image:
-      repository: ghcr.io/linuxserver/jellyseerr
+      repository: fallenbagel/jellyseerr
       tag: 1.5.0
     env:
       TZ: Europe/Berlin
