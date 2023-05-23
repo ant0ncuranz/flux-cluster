@@ -9,3 +9,7 @@ resources:
   - ./dashboard/ks.yaml
   - ./transmission/ks.yaml
   - ./jellyfin/ks.yaml
+  - ./prowlarr/ks.yaml
+  # - ./sonarr/ks.yaml
+  # - ./radarr/ks.yaml
+  # - ./jellyseerr/ks.yaml
