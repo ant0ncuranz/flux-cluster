@@ -45,7 +45,7 @@ spec:
       persistence:
         tsdata:
           enabled: true
-          type: emptyDir
+          storageClass: local-path
     proxy:
       ingress:
         main:
