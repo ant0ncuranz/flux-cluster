@@ -41,10 +41,14 @@ spec:
         storageClass: local-path
       filme:
         enabled: true
-        existingClaim: jellyfin-filme
+        type: hostPath
+        hostPath: /mnt/HDD1/Public/Filme
+        mountPath: /filme
       serien:
         enabled: true
-        existingClaim: jellyfin-serien
+        type: hostPath
+        hostPath: /mnt/HDD1/Public/Serien
+        mountPath: /serien
     service:
       main:
         ports:

@@ -4,4 +4,3 @@ kind: Kustomization
 namespace: kube-system
 resources:
   - ./helmrelease.yaml
-  - ./hdd-storage-class.yaml
