@@ -45,7 +45,7 @@ spec:
       main:
         ports:
           http:
-            port: &port 9696
+            port: &port 5055
     probes:
       liveness: &probes
         enabled: true
