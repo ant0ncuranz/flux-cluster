@@ -33,7 +33,7 @@ spec:
       tag: 5.0.2
     env:
       TZ: Europe/Berlin
-      # LOCAL_NETWORK: 10.42.152.219/32
+      LOCAL_NETWORK: 10.42.0.0/16
       # LOCAL_NETWORK: 192.168.0.0/16
       OPENVPN_PROVIDER: custom
       OPENVPN_USERNAME: user
@@ -76,21 +76,21 @@ spec:
         add:
           - NET_ADMIN
       privileged: true
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /transmission/web/
-            port: *port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 10
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
+    # probes:
+    #   liveness: &probes
+    #     enabled: true
+    #     custom: true
+    #     spec:
+    #       httpGet:
+    #         path: /transmission/web/
+    #         port: *port
+    #       initialDelaySeconds: 0
+    #       periodSeconds: 10
+    #       timeoutSeconds: 10
+    #       failureThreshold: 3
+    #   readiness: *probes
+    #   startup:
+    #     enabled: false
     resources:
       requests:
         cpu: 100m
