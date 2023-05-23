@@ -35,7 +35,6 @@ spec:
           type: hostPath
           hostPath: /mnt/HDD1/Immich
           mountPath: /library
-          existingClaim: immich-data
     postgresql:
       enabled: true
       global:
