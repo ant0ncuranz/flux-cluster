@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: prowlarr
+  name: radarr
   namespace: default
 spec:
   interval: 15m
@@ -29,7 +29,7 @@ spec:
     controller:
       strategy: RollingUpdate
     image:
-      repository: ghcr.io/linuxserver/prowlarr
+      repository: ghcr.io/linuxserver/radarr
       tag: version-1.4.1.3258
     env:
       TZ: Europe/Berlin
@@ -41,11 +41,16 @@ spec:
         accessMode: ReadWriteOnce
         size: 250Mi
         storageClass: local-path
+      filme:
+        enabled: true
+        type: hostPath
+        hostPath: /mnt/HDD1/Public/Filme
+        mountPath: /filme
     service:
       main:
         ports:
           http:
-            port: &port 9696
+            port: &port 7878
     probes:
       liveness: &probes
         enabled: true
@@ -68,7 +73,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
         hosts:
-          - host: "prowlarr.${SECRET_DOMAIN}"
+          - host: "radarr.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

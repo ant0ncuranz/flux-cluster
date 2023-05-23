@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: prowlarr
+  name: sonarr
   namespace: default
 spec:
   interval: 15m
@@ -29,8 +29,8 @@ spec:
     controller:
       strategy: RollingUpdate
     image:
-      repository: ghcr.io/linuxserver/prowlarr
-      tag: version-1.4.1.3258
+      repository: ghcr.io/linuxserver/sonarr
+      tag: version-3.0.10.1567
     env:
       TZ: Europe/Berlin
       PUID: 1000
@@ -41,11 +41,16 @@ spec:
         accessMode: ReadWriteOnce
         size: 250Mi
         storageClass: local-path
+      serien:
+        enabled: true
+        type: hostPath
+        hostPath: /mnt/HDD1/Public/Serien
+        mountPath: /serien
     service:
       main:
         ports:
           http:
-            port: &port 9696
+            port: &port 8989
     probes:
       liveness: &probes
         enabled: true
@@ -68,7 +73,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
         hosts:
-          - host: "prowlarr.${SECRET_DOMAIN}"
+          - host: "sonarr.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
