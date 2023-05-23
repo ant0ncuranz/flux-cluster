@@ -7,5 +7,5 @@ resources:
   - ./immich/ks.yaml
   - ./homebridge/ks.yaml
   - ./dashboard/ks.yaml
-  # - ./transmission/ks.yaml
+  - ./transmission/ks.yaml
   - ./jellyfin/ks.yaml
