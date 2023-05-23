@@ -33,7 +33,7 @@ spec:
       tag: 5.0.2
     env:
       TZ: Europe/Berlin
-      LOCAL_NETWORK: 10.42.0.0/24
+      LOCAL_NETWORK: 10.42.0.0/16
       OPENVPN_PROVIDER: custom
       OPENVPN_USERNAME: user
       OPENVPN_PASSWORD: pass
