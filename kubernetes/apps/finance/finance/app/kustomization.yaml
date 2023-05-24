@@ -4,12 +4,7 @@ kind: Kustomization
 namespace: finance
 resources:
   - ./postgres-helmrelease.yaml
-  - ./keycloak-helmrelease.yaml
-  - ./backend-deployment.yaml
-  - ./backend-service.yaml
-  - ./backend-ingress.yaml
-  - ./frontend-deployment.yaml
-  - ./frontend-service.yaml
-  - ./frontend-ingress.yaml
+  - ./backend-helmrelease.yaml
+  - ./frontend-helmrelease.yaml
   - ./gitlab-token.yaml
   - ./secret.yaml

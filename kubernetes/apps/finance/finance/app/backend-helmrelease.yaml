@@ -1,0 +1,101 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: finance-backend
+  namespace: finance
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controller:
+      strategy: RollingUpdate
+    image:
+      repository: registry.gitlab.com/antoncuranz/financeq
+      tag: dev
+    imagePullSecrets:
+      - name: gitlab-token
+    env:
+      - name: CORS_ALLOW_ORIGINS
+        value: https://finance.${SECRET_DOMAIN}
+      - name: KEYCLOAK_CLIENT_ID
+        value: finance-secrets
+      - name: KEYCLOAK_REALM_URL
+        value: https://keycloak.${SECRET_DOMAIN}/realms/finance
+      - name: KEYCLOAK_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: finance-secrets
+            key: KEYCLOAK_SECRET
+      - name: NORDIGEN_SECRET_ID
+        valueFrom:
+          secretKeyRef:
+            name: finance-secrets
+            key: NORDIGEN_SECRET_ID
+      - name: NORDIGEN_SECRET_KEY
+        valueFrom:
+          secretKeyRef:
+            name: finance-secrets
+            key: NORDIGEN_SECRET_KEY
+      - name: POSTGRES_PASSWD
+        valueFrom:
+          secretKeyRef:
+            name: finance-secrets
+            key: POSTGRES_PASSWD
+      - name: POSTGRES_URL
+        value: jdbc:postgresql://finance-postgres:5432/finance
+      - name: POSTGRES_USER
+        value: postgres
+      - name: CRON_ALERT_DELIVERY
+        value: "0 */15 * * * ?"
+      - name: CRON_TRANSACTION_VALIDATION
+        value: "0 0 */1 * * ?"
+    persistence:
+      config:
+        enabled: true
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: local-path
+    service:
+      main:
+        ports:
+          http:
+            port: &port 8080
+    probes:
+      startup:
+        enabled: false
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
+        hosts:
+          - host: "financeq.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        memory: 1024Mi
