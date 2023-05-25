@@ -39,7 +39,7 @@ spec:
       - name: KEYCLOAK_CLIENT_ID
         value: finance-secrets
       - name: KEYCLOAK_REALM_URL
-        value: https://keycloak.${SECRET_DOMAIN}/realms/finance
+        value: https://keycloak.${SECRET_DOMAIN}/realms/home
       - name: KEYCLOAK_SECRET
         valueFrom:
           secretKeyRef:

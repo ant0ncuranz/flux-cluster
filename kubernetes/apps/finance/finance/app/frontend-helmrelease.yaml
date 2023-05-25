@@ -39,7 +39,7 @@ spec:
       - name: KEYCLOAK_CLIENT_ID
         value: finance-frontend
       - name: KEYCLOAK_REALM
-        value: finance
+        value: home
       - name: KEYCLOAK_URL
         value: https://keycloak.${SECRET_DOMAIN}
     service:
