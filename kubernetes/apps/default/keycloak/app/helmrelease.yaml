@@ -30,14 +30,14 @@ spec:
     proxy: edge
     global:
       storageClass: local-path
+      imagePullSecrets:
+        - name: gitlab-token
     ingress:
       enabled: true
       ingressClassName: nginx
       annotations:
         external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
       hostname: "keycloak.${SECRET_DOMAIN}"
-    imagePullSecrets:
-      - name: gitlab-token
     initContainers:
       - name: theme-provider
         image: registry.gitlab.com/antoncuranz/keycloak-theme:latest
