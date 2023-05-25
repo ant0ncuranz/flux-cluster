@@ -39,16 +39,13 @@ spec:
     initContainers:
       - name: theme-provider
         image: registry.gitlab.com/antoncuranz/keycloak-theme:latest
-        imagePullPolicy: IfNotPresent
         imagePullSecrets:
-          - name: finance/gitlab-token
+          - name: gitlab-token
         command:
           - sh
         args:
           - -c
-          - |
-            echo "Copying theme..."
-            cp -R /keywind/* /theme
+          - cp -R /keywind/* /theme
         volumeMounts:
           - name: theme
             mountPath: /theme
