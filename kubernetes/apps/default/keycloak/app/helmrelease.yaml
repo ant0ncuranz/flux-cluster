@@ -36,11 +36,11 @@ spec:
       annotations:
         external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
       hostname: "keycloak.${SECRET_DOMAIN}"
+    imagePullSecrets:
+      - name: gitlab-token
     initContainers:
       - name: theme-provider
         image: registry.gitlab.com/antoncuranz/keycloak-theme:latest
-        imagePullSecrets:
-          - name: gitlab-token
         command:
           - sh
         args:
