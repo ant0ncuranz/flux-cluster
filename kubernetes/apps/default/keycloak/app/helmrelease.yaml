@@ -30,8 +30,6 @@ spec:
     proxy: edge
     global:
       storageClass: local-path
-      imagePullSecrets:
-        - name: gitlab-token
     ingress:
       enabled: true
       ingressClassName: nginx

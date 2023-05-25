@@ -1,9 +1,0 @@
----
-apiVersion: onepassword.com/v1
-kind: OnePasswordItem
-type: kubernetes.io/dockerconfigjson
-metadata:
-  name: gitlab-token
-  namespace: default
-spec:
-  itemPath: "vaults/Kubernetes/items/Gitlab Registry Access Token"
