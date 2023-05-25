@@ -38,10 +38,10 @@ spec:
       hostname: "keycloak.${SECRET_DOMAIN}"
     extraInitContainers:
       - name: theme-provider
-        image: registry.gitlab.com/antoncuranz/keycloak-theme:latest
+        image: busybox:1.28 #registry.gitlab.com/antoncuranz/keycloak-theme:latest
         imagePullPolicy: IfNotPresent
-        imagePullSecrets:
-          - name: finance/gitlab-token
+        # imagePullSecrets:
+        #   - name: finance/gitlab-token
         command:
           - sh
         args:
