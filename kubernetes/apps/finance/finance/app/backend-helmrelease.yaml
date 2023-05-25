@@ -68,12 +68,6 @@ spec:
         value: "0 */15 * * * ?"
       - name: CRON_TRANSACTION_VALIDATION
         value: "0 0 */1 * * ?"
-    persistence:
-      config:
-        enabled: true
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: local-path
     service:
       main:
         ports:
