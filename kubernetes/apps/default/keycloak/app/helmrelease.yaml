@@ -36,3 +36,25 @@ spec:
       annotations:
         external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
       hostname: "keycloak.${SECRET_DOMAIN}"
+    extraInitContainers: |
+      - name: theme-provider
+        image: registry.gitlab.com/antoncuranz/keycloak-theme:latest
+        imagePullPolicy: IfNotPresent
+        imagePullSecrets:
+          - name: finance/gitlab-token
+        command:
+          - sh
+        args:
+          - -c
+          - |
+            echo "Copying theme..."
+            cp -R /keywind/* /theme
+        volumeMounts:
+          - name: theme
+            mountPath: /theme
+    extraVolumeMounts: |
+      - name: theme
+        mountPath: /opt/bitnami/keycloak/themes/keywind
+    extraVolumes: |
+      - name: theme
+        emptyDir: {}
