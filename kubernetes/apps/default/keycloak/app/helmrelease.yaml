@@ -30,8 +30,6 @@ spec:
     proxy: edge
     global:
       storageClass: local-path
-    postgresql:
-      enabled: false
     ingress:
       enabled: true
       ingressClassName: nginx
