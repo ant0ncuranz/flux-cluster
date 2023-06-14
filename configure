@@ -50,11 +50,11 @@ main() {
             > "${PROJECT_DIR}/kubernetes/flux/vars/cluster-secrets.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/flux/vars/cluster-secrets.sops.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/kubernetes/cert-manager-secret.sops.yaml" \
-            > "${PROJECT_DIR}/kubernetes/apps/cert-manager/cert-manager/issuers/secret.sops.yaml"
-        sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/apps/cert-manager/cert-manager/issuers/secret.sops.yaml"
+            > "${PROJECT_DIR}/kubernetes/infra/networking/cert-manager/issuers/secret.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/infra/networking/cert-manager/issuers/secret.sops.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/kubernetes/external-dns-secret.sops.yaml" \
-            > "${PROJECT_DIR}/kubernetes/apps/networking/external-dns/app/secret.sops.yaml"
-        sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/apps/networking/external-dns/app/secret.sops.yaml"
+            > "${PROJECT_DIR}/kubernetes/infra/networking/external-dns/app/secret.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/infra/networking/external-dns/app/secret.sops.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/kubernetes/onepassword-secret.sops.yaml" \
             > "${PROJECT_DIR}/kubernetes/base/onepassword/onepassword/app/secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/base/onepassword/onepassword/app/secret.sops.yaml"
@@ -465,9 +465,9 @@ setup_prometheus_endpoints() {
             node_addr="BOOTSTRAP_ANSIBLE_HOST_ADDR_${node_id}"
             _log "INFO(${FUNCNAME[0]})" "Setting up Prometheus endpoint for '${!node_addr}'"
             yq --inplace 'del(.spec.values.kubeControllerManager.endpoints[])' \
-                "${PROJECT_DIR}/kubernetes/apps/monitoring/kube-prometheus-stack/app/helmrelease.yaml"
+                "${PROJECT_DIR}/kubernetes/infra/monitoring/kube-prometheus-stack/app/helmrelease.yaml"
             yq --inplace ".spec.values.kubeControllerManager.endpoints += \"${!node_addr}\"" \
-                "${PROJECT_DIR}/kubernetes/apps/monitoring/kube-prometheus-stack/app/helmrelease.yaml"
+                "${PROJECT_DIR}/kubernetes/infra/monitoring/kube-prometheus-stack/app/helmrelease.yaml"
         fi
     done
 }
@@ -481,8 +481,8 @@ setup_github_webhook() {
     export BOOTSTRAP_FLUX_GITHUB_WEBHOOK_SECRET="${WEBHOOK_SECRET}"
     _log "INFO(${FUNCNAME[0]})" "Using GitHub Token '${WEBHOOK_SECRET}' for Flux"
     envsubst < "${PROJECT_DIR}/tmpl/kubernetes/github-webhook-token-secret.sops.yaml" \
-        > "${PROJECT_DIR}/kubernetes/apps/flux-system/addons/webhooks/github/secret.sops.yaml"
-    sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/apps/flux-system/addons/webhooks/github/secret.sops.yaml"
+        > "${PROJECT_DIR}/kubernetes/infra/flux-system/addons/webhooks/github/secret.sops.yaml"
+    sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/infra/flux-system/addons/webhooks/github/secret.sops.yaml"
 }
 
 success() {
