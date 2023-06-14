@@ -308,23 +308,6 @@ verify_cloudflare() {
         _log "ERROR(${FUNCNAME[0]})" "Unable to get Cloudflare Account and Zone information ${errors}"
         exit 1
     fi
-    local cloudflare_tunnel=
-    _has_envar "BOOTSTRAP_CLOUDFLARE_ACCOUNT_TAG" "true"
-    _has_envar "BOOTSTRAP_CLOUDFLARE_TUNNEL_SECRET" "true"
-    _has_envar "BOOTSTRAP_CLOUDFLARE_TUNNEL_ID" "true"
-    # Try to retrieve the Cloudflare Tunnel information from Cloudflare's API
-    cloudflare_tunnel=$(curl -s -X GET "https://api.cloudflare.com/client/v4/accounts/${BOOTSTRAP_CLOUDFLARE_ACCOUNT_TAG}/cfd_tunnel/${BOOTSTRAP_CLOUDFLARE_TUNNEL_ID}" \
-        -H "X-Auth-Email: ${BOOTSTRAP_CLOUDFLARE_EMAIL}" \
-        -H "X-Auth-Key: ${BOOTSTRAP_CLOUDFLARE_APIKEY}" \
-        -H "Content-Type: application/json"
-    )
-    if [[ "$(echo "${cloudflare_tunnel}" | jq ".success")" == "true" ]]; then
-        _log "INFO(${FUNCNAME[0]})" "Verified Cloudflare Tunnel information"
-    else
-        errors=$(echo "${cloudflare_tunnel}" | jq -c ".errors")
-        _log "ERROR(${FUNCNAME[0]})" "Unable to get Cloudflare Tunnel information ${errors}"
-        exit 1
-    fi
 }
 
 verify_ansible_hosts() {
