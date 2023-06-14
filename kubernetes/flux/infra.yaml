@@ -2,19 +2,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-onepassword
+  name: cluster-infra
   namespace: flux-system
 spec:
   interval: 30m
-  path: ./kubernetes/onepassword
+  path: ./kubernetes/infra
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
   postBuild:
     substituteFrom:
       - kind: ConfigMap
