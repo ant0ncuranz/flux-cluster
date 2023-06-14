@@ -5,7 +5,7 @@ metadata:
   name: cluster-base-onepassword
   namespace: flux-system
 spec:
-  path: ./kubernetes/base/onepassword/app
+  path: ./kubernetes/base/onepassword/onepassword/app
   prune: true
   sourceRef:
     kind: GitRepository
