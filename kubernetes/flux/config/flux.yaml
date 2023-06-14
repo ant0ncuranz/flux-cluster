@@ -8,7 +8,7 @@ spec:
   interval: 10m
   url: oci://ghcr.io/fluxcd/flux-manifests
   ref:
-    tag: v2.0.0-rc.1
+    tag: v2.0.0-rc.5
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -93,10 +93,6 @@ spec:
         - op: add
           path: /spec/template/spec/containers/0/args/-
           value: --oom-watch-interval=500ms
-        # Enable drift detection feature
-        - op: add
-          path: /spec/template/spec/containers/0/args/-
-          value: --feature-gates=DetectDrift=true
       target:
         kind: Deployment
         name: helm-controller

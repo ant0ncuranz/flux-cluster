@@ -5,14 +5,16 @@ metadata:
   name: cluster-apps
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: cluster-base
   interval: 30m
   path: ./kubernetes/apps
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   postBuild:
     substituteFrom:
       - kind: ConfigMap

@@ -30,6 +30,7 @@ main() {
         verify_ansible_hosts
         verify_metallb
         verify_kubevip
+        verify_cluster_service_cidrs
         verify_addressing
         verify_age
         verify_git_repository
@@ -44,23 +45,27 @@ main() {
             > "${PROJECT_DIR}/kubernetes/flux/vars/cluster-settings.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/kubernetes/flux/cluster.yaml" \
             > "${PROJECT_DIR}/kubernetes/flux/config/cluster.yaml"
-        # generate terraform secrets
-        envsubst < "${PROJECT_DIR}/tmpl/terraform/secret.sops.yaml" \
-            > "${PROJECT_DIR}/terraform/cloudflare/secret.sops.yaml"
-        sops --encrypt --in-place "${PROJECT_DIR}/terraform/cloudflare/secret.sops.yaml"
-        # generate kubernetes secrets
+        # generate secrets
         envsubst < "${PROJECT_DIR}/tmpl/kubernetes/cluster-secrets.sops.yaml" \
             > "${PROJECT_DIR}/kubernetes/flux/vars/cluster-secrets.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/flux/vars/cluster-secrets.sops.yaml"
+        envsubst < "${PROJECT_DIR}/tmpl/kubernetes/cert-manager-secret.sops.yaml" \
+            > "${PROJECT_DIR}/kubernetes/apps/cert-manager/cert-manager/issuers/secret.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/apps/cert-manager/cert-manager/issuers/secret.sops.yaml"
+        envsubst < "${PROJECT_DIR}/tmpl/kubernetes/external-dns-secret.sops.yaml" \
+            > "${PROJECT_DIR}/kubernetes/apps/networking/external-dns/app/secret.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/apps/networking/external-dns/app/secret.sops.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/kubernetes/onepassword-secret.sops.yaml" \
-            > "${PROJECT_DIR}/kubernetes/apps/onepassword/onepassword/app/secret.sops.yaml"
-        sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/apps/onepassword/onepassword/app/secret.sops.yaml"
+            > "${PROJECT_DIR}/kubernetes/base/onepassword/onepassword/app/secret.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/base/onepassword/onepassword/app/secret.sops.yaml"
         # generate ansible settings
-        envsubst < "${PROJECT_DIR}/tmpl/ansible/kube-vip.yml" \
-            > "${PROJECT_DIR}/ansible/inventory/group_vars/kubernetes/kube-vip.yml"
+        envsubst < "${PROJECT_DIR}/tmpl/ansible/supplemental.yml" \
+            > "${PROJECT_DIR}/ansible/inventory/group_vars/kubernetes/supplemental.yml"
         # generate ansible hosts file and secrets
         generate_ansible_hosts
         generate_ansible_host_secrets
+        setup_github_webhook
+        setup_prometheus_endpoints
         success
     fi
 }
@@ -222,7 +227,6 @@ verify_binaries() {
     _has_binary "sops"
     _has_binary "ssh"
     _has_binary "task"
-    _has_binary "terraform"
     _has_binary "yq"
     if ! [[ "$(sops --version)" =~ 3\.[0-9]+\.[0-9]+ ]]; then
         _log "ERROR(${FUNCNAME[0]})" "Incompatible sops version, make sure you are using the latest release of github.com/mozilla/sops"
@@ -247,6 +251,12 @@ verify_metallb() {
     _has_valid_ip "$(echo "${BOOTSTRAP_METALLB_LB_RANGE}" | cut -d- -f2)" "BOOTSTRAP_METALLB_LB_RANGE"
     _has_valid_ip "${BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR}" "BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR"
     _has_valid_ip "${BOOTSTRAP_METALLB_INGRESS_ADDR}" "BOOTSTRAP_METALLB_INGRESS_ADDR"
+}
+
+verify_cluster_service_cidrs() {
+    #TODO: Validate input is a CIDR range
+    _has_envar "BOOTSTRAP_CLUSTER_CIDR"
+    _has_envar "BOOTSTRAP_SERVICE_CIDR"
 }
 
 verify_git_repository() {
@@ -280,8 +290,8 @@ verify_master_count() {
 }
 
 verify_cloudflare() {
-    local account_zone=
     local errors=
+    local account_zone=
     _has_envar "BOOTSTRAP_CLOUDFLARE_APIKEY" "true"
     _has_envar "BOOTSTRAP_CLOUDFLARE_DOMAIN" "true"
     _has_envar "BOOTSTRAP_CLOUDFLARE_EMAIL" "true"
@@ -296,6 +306,23 @@ verify_cloudflare() {
     else
         errors=$(echo "${account_zone}" | jq -c ".errors")
         _log "ERROR(${FUNCNAME[0]})" "Unable to get Cloudflare Account and Zone information ${errors}"
+        exit 1
+    fi
+    local cloudflare_tunnel=
+    _has_envar "BOOTSTRAP_CLOUDFLARE_ACCOUNT_TAG" "true"
+    _has_envar "BOOTSTRAP_CLOUDFLARE_TUNNEL_SECRET" "true"
+    _has_envar "BOOTSTRAP_CLOUDFLARE_TUNNEL_ID" "true"
+    # Try to retrieve the Cloudflare Tunnel information from Cloudflare's API
+    cloudflare_tunnel=$(curl -s -X GET "https://api.cloudflare.com/client/v4/accounts/${BOOTSTRAP_CLOUDFLARE_ACCOUNT_TAG}/cfd_tunnel/${BOOTSTRAP_CLOUDFLARE_TUNNEL_ID}" \
+        -H "X-Auth-Email: ${BOOTSTRAP_CLOUDFLARE_EMAIL}" \
+        -H "X-Auth-Key: ${BOOTSTRAP_CLOUDFLARE_APIKEY}" \
+        -H "Content-Type: application/json"
+    )
+    if [[ "$(echo "${cloudflare_tunnel}" | jq ".success")" == "true" ]]; then
+        _log "INFO(${FUNCNAME[0]})" "Verified Cloudflare Tunnel information"
+    else
+        errors=$(echo "${cloudflare_tunnel}" | jq -c ".errors")
+        _log "ERROR(${FUNCNAME[0]})" "Unable to get Cloudflare Tunnel information ${errors}"
         exit 1
     fi
 }
@@ -445,6 +472,34 @@ generate_ansible_hosts() {
             done
         fi
     } > "${PROJECT_DIR}/ansible/inventory/hosts.yml"
+}
+
+setup_prometheus_endpoints() {
+    for var in "${!BOOTSTRAP_ANSIBLE_HOST_ADDR_@}"; do
+        node_id=$(echo "${var}" | awk -F"_" '{print $5}')
+        node_control="BOOTSTRAP_ANSIBLE_CONTROL_NODE_${node_id}"
+        if [[ "${!node_control}" == "true" ]]; then
+            node_addr="BOOTSTRAP_ANSIBLE_HOST_ADDR_${node_id}"
+            _log "INFO(${FUNCNAME[0]})" "Setting up Prometheus endpoint for '${!node_addr}'"
+            yq --inplace 'del(.spec.values.kubeControllerManager.endpoints[])' \
+                "${PROJECT_DIR}/kubernetes/apps/monitoring/kube-prometheus-stack/app/helmrelease.yaml"
+            yq --inplace ".spec.values.kubeControllerManager.endpoints += \"${!node_addr}\"" \
+                "${PROJECT_DIR}/kubernetes/apps/monitoring/kube-prometheus-stack/app/helmrelease.yaml"
+        fi
+    done
+}
+
+setup_github_webhook() {
+    _has_envar "BOOTSTRAP_FLUX_GITHUB_WEBHOOK_SECRET"
+    WEBHOOK_SECRET="${BOOTSTRAP_FLUX_GITHUB_WEBHOOK_SECRET}"
+    if [[ "${WEBHOOK_SECRET}" == "generated" ]]; then
+        WEBHOOK_SECRET="$(openssl rand -hex 12)"
+    fi
+    export BOOTSTRAP_FLUX_GITHUB_WEBHOOK_SECRET="${WEBHOOK_SECRET}"
+    _log "INFO(${FUNCNAME[0]})" "Using GitHub Token '${WEBHOOK_SECRET}' for Flux"
+    envsubst < "${PROJECT_DIR}/tmpl/kubernetes/github-webhook-token-secret.sops.yaml" \
+        > "${PROJECT_DIR}/kubernetes/apps/flux-system/addons/webhooks/github/secret.sops.yaml"
+    sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/apps/flux-system/addons/webhooks/github/secret.sops.yaml"
 }
 
 success() {
