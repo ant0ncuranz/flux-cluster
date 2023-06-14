@@ -16,3 +16,4 @@ resources:
   - ./prometheus.yaml
   - ./pihole.yaml
   - ./immich.yaml
+  - ./k8up-io.yaml
