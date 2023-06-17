@@ -44,11 +44,12 @@ spec:
         type: hostPath
         hostPath: /srv/Transmission
         mountPath: /data
-      openvpn:
+      openvpn-config:
         enabled: true
-        accessMode: ReadWriteOnce
-        size: 25Mi
-        storageClass: local-path
+        type: secret
+        # accessMode: ReadWriteOnce
+        # size: 25Mi
+        # storageClass: local-path
         mountPath: /etc/openvpn/custom
     service:
       main:
