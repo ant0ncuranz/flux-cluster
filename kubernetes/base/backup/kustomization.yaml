@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./k8up/ks.yaml
-  - ./restic-rest/ks.yaml
+  - ./restic/ks.yaml

@@ -2,21 +2,26 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: backup-repo
+  name: backup-secrets
 type: Opaque
 stringData:
-  password: asdf
+  repoPassword: asdf
 ---
 apiVersion: k8up.io/v1
 kind: Backup
 metadata:
-  name: backup-test-2
+  name: backup-test
 spec:
   failedJobsHistoryLimit: 2
   successfulJobsHistoryLimit: 2
   backend:
     repoPasswordSecretRef:
-      name: backup-repo
-      key: password
-    local:
-      mountPath: "/backup"
+      name: backup-secrets
+      key: repoPassword
+    rest:
+      userSecretRef:
+        name: backup-secrets
+        key: user
+      passwordSecretReg:
+        name: backup-secrets
+        key: password
