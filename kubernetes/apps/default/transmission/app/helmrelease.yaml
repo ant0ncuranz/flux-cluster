@@ -48,10 +48,13 @@ spec:
         enabled: true
         type: secret
         name: openvpn-config
-        # accessMode: ReadWriteOnce
-        # size: 25Mi
-        # storageClass: local-path
-        mountPath: /etc/openvpn/custom
+    initContainers:
+      - name: config-provider
+        image: busybox:1.36
+        command: ['/bin/sh', '-c', 'cp /config/* /etc/openvpn/custom']
+        volumeMounts:
+          - name: openvpn-config
+            mountPath: /config
     service:
       main:
         ports:
