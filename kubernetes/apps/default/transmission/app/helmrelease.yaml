@@ -47,6 +47,7 @@ spec:
       openvpn-config:
         enabled: true
         type: secret
+        name: openvpn-config
         # accessMode: ReadWriteOnce
         # size: 25Mi
         # storageClass: local-path
