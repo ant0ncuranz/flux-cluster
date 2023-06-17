@@ -39,10 +39,8 @@ spec:
     persistence:
       www:
         enabled: true
+        type: emptyDir
         mountPath: /config/www
-        accessMode: ReadWriteOnce
-        size: 250Mi
-        storageClass: local-path
     ingress:
       main:
         enabled: true
@@ -54,6 +52,19 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+    initContainers:
+      - name: www-provider
+        image: registry.gitlab.com/antoncuranz/dashboard:latest
+        command:
+          - sh
+        args:
+          - -c
+          - |
+            echo "Copying www..."
+            cp -R /www/* /volume
+        volumeMounts:
+          - name: www
+            mountPath: /volume
     probes:
       liveness:
         enabled: true
