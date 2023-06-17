@@ -53,7 +53,8 @@ spec:
               - path: /
                 pathType: Prefix
     initContainers:
-      - name: www-provider
+      www-provider:
+        name: www-provider
         image: registry.gitlab.com/antoncuranz/dashboard:latest
         command:
           - sh
